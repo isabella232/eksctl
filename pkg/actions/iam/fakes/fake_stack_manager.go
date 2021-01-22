@@ -14,6 +14,43 @@ import (
 )
 
 type FakeStackManager struct {
+	DeleteStackBySpecStub        func(*cloudformation.Stack) (*cloudformation.Stack, error)
+	deleteStackBySpecMutex       sync.RWMutex
+	deleteStackBySpecArgsForCall []struct {
+		arg1 *cloudformation.Stack
+	}
+	deleteStackBySpecReturns struct {
+		result1 *cloudformation.Stack
+		result2 error
+	}
+	deleteStackBySpecReturnsOnCall map[int]struct {
+		result1 *cloudformation.Stack
+		result2 error
+	}
+	DeleteStackBySpecSyncStub        func(*cloudformation.Stack, chan error) error
+	deleteStackBySpecSyncMutex       sync.RWMutex
+	deleteStackBySpecSyncArgsForCall []struct {
+		arg1 *cloudformation.Stack
+		arg2 chan error
+	}
+	deleteStackBySpecSyncReturns struct {
+		result1 error
+	}
+	deleteStackBySpecSyncReturnsOnCall map[int]struct {
+		result1 error
+	}
+	DescribeIAMServiceAccountStacksStub        func() ([]*cloudformation.Stack, error)
+	describeIAMServiceAccountStacksMutex       sync.RWMutex
+	describeIAMServiceAccountStacksArgsForCall []struct {
+	}
+	describeIAMServiceAccountStacksReturns struct {
+		result1 []*cloudformation.Stack
+		result2 error
+	}
+	describeIAMServiceAccountStacksReturnsOnCall map[int]struct {
+		result1 []*cloudformation.Stack
+		result2 error
+	}
 	GetIAMServiceAccountsStub        func() ([]*v1alpha5.ClusterIAMServiceAccount, error)
 	getIAMServiceAccountsMutex       sync.RWMutex
 	getIAMServiceAccountsArgsForCall []struct {
@@ -71,6 +108,188 @@ type FakeStackManager struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeStackManager) DeleteStackBySpec(arg1 *cloudformation.Stack) (*cloudformation.Stack, error) {
+	fake.deleteStackBySpecMutex.Lock()
+	ret, specificReturn := fake.deleteStackBySpecReturnsOnCall[len(fake.deleteStackBySpecArgsForCall)]
+	fake.deleteStackBySpecArgsForCall = append(fake.deleteStackBySpecArgsForCall, struct {
+		arg1 *cloudformation.Stack
+	}{arg1})
+	stub := fake.DeleteStackBySpecStub
+	fakeReturns := fake.deleteStackBySpecReturns
+	fake.recordInvocation("DeleteStackBySpec", []interface{}{arg1})
+	fake.deleteStackBySpecMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecCallCount() int {
+	fake.deleteStackBySpecMutex.RLock()
+	defer fake.deleteStackBySpecMutex.RUnlock()
+	return len(fake.deleteStackBySpecArgsForCall)
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecCalls(stub func(*cloudformation.Stack) (*cloudformation.Stack, error)) {
+	fake.deleteStackBySpecMutex.Lock()
+	defer fake.deleteStackBySpecMutex.Unlock()
+	fake.DeleteStackBySpecStub = stub
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecArgsForCall(i int) *cloudformation.Stack {
+	fake.deleteStackBySpecMutex.RLock()
+	defer fake.deleteStackBySpecMutex.RUnlock()
+	argsForCall := fake.deleteStackBySpecArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecReturns(result1 *cloudformation.Stack, result2 error) {
+	fake.deleteStackBySpecMutex.Lock()
+	defer fake.deleteStackBySpecMutex.Unlock()
+	fake.DeleteStackBySpecStub = nil
+	fake.deleteStackBySpecReturns = struct {
+		result1 *cloudformation.Stack
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecReturnsOnCall(i int, result1 *cloudformation.Stack, result2 error) {
+	fake.deleteStackBySpecMutex.Lock()
+	defer fake.deleteStackBySpecMutex.Unlock()
+	fake.DeleteStackBySpecStub = nil
+	if fake.deleteStackBySpecReturnsOnCall == nil {
+		fake.deleteStackBySpecReturnsOnCall = make(map[int]struct {
+			result1 *cloudformation.Stack
+			result2 error
+		})
+	}
+	fake.deleteStackBySpecReturnsOnCall[i] = struct {
+		result1 *cloudformation.Stack
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecSync(arg1 *cloudformation.Stack, arg2 chan error) error {
+	fake.deleteStackBySpecSyncMutex.Lock()
+	ret, specificReturn := fake.deleteStackBySpecSyncReturnsOnCall[len(fake.deleteStackBySpecSyncArgsForCall)]
+	fake.deleteStackBySpecSyncArgsForCall = append(fake.deleteStackBySpecSyncArgsForCall, struct {
+		arg1 *cloudformation.Stack
+		arg2 chan error
+	}{arg1, arg2})
+	stub := fake.DeleteStackBySpecSyncStub
+	fakeReturns := fake.deleteStackBySpecSyncReturns
+	fake.recordInvocation("DeleteStackBySpecSync", []interface{}{arg1, arg2})
+	fake.deleteStackBySpecSyncMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecSyncCallCount() int {
+	fake.deleteStackBySpecSyncMutex.RLock()
+	defer fake.deleteStackBySpecSyncMutex.RUnlock()
+	return len(fake.deleteStackBySpecSyncArgsForCall)
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecSyncCalls(stub func(*cloudformation.Stack, chan error) error) {
+	fake.deleteStackBySpecSyncMutex.Lock()
+	defer fake.deleteStackBySpecSyncMutex.Unlock()
+	fake.DeleteStackBySpecSyncStub = stub
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecSyncArgsForCall(i int) (*cloudformation.Stack, chan error) {
+	fake.deleteStackBySpecSyncMutex.RLock()
+	defer fake.deleteStackBySpecSyncMutex.RUnlock()
+	argsForCall := fake.deleteStackBySpecSyncArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecSyncReturns(result1 error) {
+	fake.deleteStackBySpecSyncMutex.Lock()
+	defer fake.deleteStackBySpecSyncMutex.Unlock()
+	fake.DeleteStackBySpecSyncStub = nil
+	fake.deleteStackBySpecSyncReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeStackManager) DeleteStackBySpecSyncReturnsOnCall(i int, result1 error) {
+	fake.deleteStackBySpecSyncMutex.Lock()
+	defer fake.deleteStackBySpecSyncMutex.Unlock()
+	fake.DeleteStackBySpecSyncStub = nil
+	if fake.deleteStackBySpecSyncReturnsOnCall == nil {
+		fake.deleteStackBySpecSyncReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.deleteStackBySpecSyncReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeStackManager) DescribeIAMServiceAccountStacks() ([]*cloudformation.Stack, error) {
+	fake.describeIAMServiceAccountStacksMutex.Lock()
+	ret, specificReturn := fake.describeIAMServiceAccountStacksReturnsOnCall[len(fake.describeIAMServiceAccountStacksArgsForCall)]
+	fake.describeIAMServiceAccountStacksArgsForCall = append(fake.describeIAMServiceAccountStacksArgsForCall, struct {
+	}{})
+	stub := fake.DescribeIAMServiceAccountStacksStub
+	fakeReturns := fake.describeIAMServiceAccountStacksReturns
+	fake.recordInvocation("DescribeIAMServiceAccountStacks", []interface{}{})
+	fake.describeIAMServiceAccountStacksMutex.Unlock()
+	if stub != nil {
+		return stub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeStackManager) DescribeIAMServiceAccountStacksCallCount() int {
+	fake.describeIAMServiceAccountStacksMutex.RLock()
+	defer fake.describeIAMServiceAccountStacksMutex.RUnlock()
+	return len(fake.describeIAMServiceAccountStacksArgsForCall)
+}
+
+func (fake *FakeStackManager) DescribeIAMServiceAccountStacksCalls(stub func() ([]*cloudformation.Stack, error)) {
+	fake.describeIAMServiceAccountStacksMutex.Lock()
+	defer fake.describeIAMServiceAccountStacksMutex.Unlock()
+	fake.DescribeIAMServiceAccountStacksStub = stub
+}
+
+func (fake *FakeStackManager) DescribeIAMServiceAccountStacksReturns(result1 []*cloudformation.Stack, result2 error) {
+	fake.describeIAMServiceAccountStacksMutex.Lock()
+	defer fake.describeIAMServiceAccountStacksMutex.Unlock()
+	fake.DescribeIAMServiceAccountStacksStub = nil
+	fake.describeIAMServiceAccountStacksReturns = struct {
+		result1 []*cloudformation.Stack
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeStackManager) DescribeIAMServiceAccountStacksReturnsOnCall(i int, result1 []*cloudformation.Stack, result2 error) {
+	fake.describeIAMServiceAccountStacksMutex.Lock()
+	defer fake.describeIAMServiceAccountStacksMutex.Unlock()
+	fake.DescribeIAMServiceAccountStacksStub = nil
+	if fake.describeIAMServiceAccountStacksReturnsOnCall == nil {
+		fake.describeIAMServiceAccountStacksReturnsOnCall = make(map[int]struct {
+			result1 []*cloudformation.Stack
+			result2 error
+		})
+	}
+	fake.describeIAMServiceAccountStacksReturnsOnCall[i] = struct {
+		result1 []*cloudformation.Stack
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeStackManager) GetIAMServiceAccounts() ([]*v1alpha5.ClusterIAMServiceAccount, error) {
@@ -331,6 +550,12 @@ func (fake *FakeStackManager) UpdateStackReturnsOnCall(i int, result1 error) {
 func (fake *FakeStackManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.deleteStackBySpecMutex.RLock()
+	defer fake.deleteStackBySpecMutex.RUnlock()
+	fake.deleteStackBySpecSyncMutex.RLock()
+	defer fake.deleteStackBySpecSyncMutex.RUnlock()
+	fake.describeIAMServiceAccountStacksMutex.RLock()
+	defer fake.describeIAMServiceAccountStacksMutex.RUnlock()
 	fake.getIAMServiceAccountsMutex.RLock()
 	defer fake.getIAMServiceAccountsMutex.RUnlock()
 	fake.listStacksMatchingMutex.RLock()

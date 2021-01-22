@@ -72,6 +72,13 @@ func (t *taskWithClusterIAMServiceAccountSpec) Describe() string { return t.info
 func (t *taskWithClusterIAMServiceAccountSpec) Do(errs chan error) error {
 	return t.stackCollection.createIAMServiceAccountTask(errs, t.serviceAccount, t.oidc, t.replaceExistingRole)
 }
+func NewTaskWithStackSpec(info string, stack *Stack, call func(*Stack, chan error) error) *taskWithStackSpec {
+	return &taskWithStackSpec{
+		info:  info,
+		stack: stack,
+		call:  call,
+	}
+}
 
 type taskWithStackSpec struct {
 	info  string
@@ -82,6 +89,14 @@ type taskWithStackSpec struct {
 func (t *taskWithStackSpec) Describe() string { return t.info }
 func (t *taskWithStackSpec) Do(errs chan error) error {
 	return t.call(t.stack, errs)
+}
+
+func NewAsyncTaskWithStackSpec(info string, stack *Stack, call func(*Stack) (*Stack, error)) *asyncTaskWithStackSpec {
+	return &asyncTaskWithStackSpec{
+		info:  info,
+		stack: stack,
+		call:  call,
+	}
 }
 
 type asyncTaskWithStackSpec struct {
@@ -107,6 +122,14 @@ func (t *asyncTaskWithoutParams) Do(errs chan error) error {
 	err := t.call()
 	close(errs)
 	return err
+}
+
+func NewKubernetesTask(info string, kubernetes kubewrapper.ClientSetGetter, call func(kubernetes.Interface) error) *kubernetesTask {
+	return &kubernetesTask{
+		info:       info,
+		kubernetes: kubernetes,
+		call:       call,
+	}
 }
 
 type kubernetesTask struct {
